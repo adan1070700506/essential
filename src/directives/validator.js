@@ -96,7 +96,6 @@ export default {
                 submitBtn.canSubmit = false;
             }
         }
-        console.log(submitHandler)
         submitBtn.addEventListener('click',submitHandler, false);
 
         el.destroySubmitBtn = () => {
