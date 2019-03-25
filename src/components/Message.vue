@@ -36,7 +36,7 @@
         },
         methods:{
             close(){
-
+                this.$emit('update:show', false)
             }
         }
     }

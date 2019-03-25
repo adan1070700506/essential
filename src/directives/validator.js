@@ -60,52 +60,55 @@ function getErrorElement(el) {
     return errorElement;
 }
 export default {
-    bind:function (el,binding) {
-        const { value,arg,modifiers } = binding;
-        const eventType = ['change','blur','input'].indexOf(arg) === -1 ? 'change' : arg;
-        const defaultHandler = () => function () {
-            showError(el);
-        };
+    bind(el, binding, vnode) {
+        const { value, arg, modifiers } = binding
+        const eventType = ['change', 'blur', 'input'].indexOf(arg) !== -1 ? arg : 'change'
+        const defaultHandler = () => {
+            showError(el)
+        }
         const handler = () => {
-            validate(el,modifiers,value);
-        };
+            validate(el, modifiers, value)
+        }
 
-        el.addEventListener('input',defaultHandler,false);
-        el.addEventListener(eventType,handler,false);
+        el.addEventListener('input', defaultHandler, false)
+        el.addEventListener(eventType, handler, false)
 
-        el.destory = () => {
-            el.removeEventListener('input',defaultHandler,false);
-            el.removeEventListener(eventType,handler,false)
-            el.destory = null;
-        };
+        el.destroy = () => {
+            el.removeEventListener('input', defaultHandler, false)
+            el.removeEventListener(eventType, handler, false)
+            el.destroy = null
+        }
     },
-    inserted:function (el,binding,vnode) {
-        const { value,modifiers } = binding;
-        const form = el.closest('[data-validator-form]');
-        const submitBtn = form ? form.querySelector('[type=submit]') : null;
-        if(submitBtn){
+    inserted(el, binding, vnode) {
+        const { value, modifiers } = binding
+        const form = el.closest('[data-validator-form]')
+        const submitBtn = form ? form.querySelector('[type=submit]') : null
 
+        if (submitBtn) {
+            const submitHandler = () => {
+                validate(el, modifiers, value)
 
-            var submitHandler = () =>  {
-                validate(el,modifiers,value)
+                const errors = form.querySelectorAll('.has-error')
+
+                if (!errors.length) {
+                    submitBtn.canSubmit = true
+                } else {
+                    submitBtn.canSubmit = false
+                }
+                submitBtn.setAttribute('canSubmit',submitBtn.canSubmit);
             }
-            const errors = form.querySelectorAll('.has-error');
-            if (!errors.length) {
-                submitBtn.canSubmit = true;
-            } else {
-                submitBtn.canSubmit = false;
+
+            submitBtn.addEventListener('click', submitHandler, false)
+
+            el.destroySubmitBtn = () => {
+                submitBtn.removeEventListener('click', submitHandler, false)
+                el.destroySubmitBtn = null
             }
         }
-        submitBtn.addEventListener('click',submitHandler, false);
-
-        el.destroySubmitBtn = () => {
-            submitBtn.removeEventListener('click',submitHandler, false);
-            el.destroySubmitBtn = null;
-        };
     },
-    unbind:function (el) {
-        el.destroy();
-        if (el.destroySubmitBtn) el.destroySubmitBtn();
+    unbind(el) {
+        el.destroy()
+        if (el.destroySubmitBtn) el.destroySubmitBtn()
     }
 
 }
