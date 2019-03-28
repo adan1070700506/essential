@@ -9,6 +9,11 @@ const routes = [
         name: 'Register',
         component: () => import('@/views/auth/Register')
     },
+    {
+        path: '/auth/login',
+        name: 'Login',
+        component: () => import('@/views/auth/Login')
+    },
     // 首页路由配置
     {
         path: '/',
