@@ -51,6 +51,16 @@
         },
         beforeCreate() {
             this.uploadsUrl = 'https://vuejscaffcdn.phphub.org/uploads/'
+            this.$axios({
+                method: "GET",
+                url: `/api/categories`,
+                data: {},
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(function(res) {
+                console.log(res.data);
+            });
         },
         methods: {
             changeNavIndex(index) {

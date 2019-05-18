@@ -6,9 +6,11 @@ import router from './router'
 import './directives'
 import './components'
 import store from './store'
+import axios from './plugins/axios'
 import VueSweetalert2 from './plugins/vue-sweetalert2'
 
 Vue.use(VueSweetalert2)
+Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

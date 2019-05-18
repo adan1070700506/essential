@@ -18,9 +18,8 @@
             const fromName = from.name
             const logout = to.params.logout
             next(vm => {
-                console.log(logout,fromName,vm.$store.state.auth);
 
-                if (vm.$store.state.auth) {
+                if (vm.$store.state.login.auth) {
                     switch (fromName) {
                         case 'Register':
                             vm.showMsg('注册成功')
@@ -31,10 +30,14 @@
                 }
             })
         },
+        computed:{
+            auth(){
+                return this.$store.state.login.auth;
+            }
+        },
         watch: {
             // 监听 auth，它的值变为 false 时，显示操作成功提示
             auth(value) {
-                console.log(value)
                 if (!value) {
                     this.showMsg('操作成功')
                 }

@@ -95,7 +95,6 @@ export default {
                 } else {
                     submitBtn.canSubmit = false
                 }
-                submitBtn.setAttribute('canSubmit',submitBtn.canSubmit);
             }
 
             submitBtn.addEventListener('click', submitHandler, false)

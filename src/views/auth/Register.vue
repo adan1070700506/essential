@@ -69,7 +69,7 @@
                     password: this.password,
                     avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
                 }
-                const localUser = this.$store.state.user
+                const localUser = this.$store.state.login.user
 
                 if (localUser) {
                     if (localUser.name === user.name) {

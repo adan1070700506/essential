@@ -43,8 +43,7 @@
         methods:{
             login(e){
                 this.$nextTick(()=>{
-                    const target = e.target.type === 'sibmit' ? e.target : e.target.parentElement;
-                    console.log(target.canSubmit)
+                    const target = e.target.type === 'submit' ? e.target : e.target.parentElement;
                     if(target.canSubmit){
                         this.submit();
                     }
@@ -55,7 +54,7 @@
                     name: this.username,
                     password: this.password
                 }
-                const localUser = this.$store.state.user
+                const localUser = this.$store.state.login.user
 
                 if (localUser) {
                     if (localUser.name !== user.name || localUser.password !== user.password) {
